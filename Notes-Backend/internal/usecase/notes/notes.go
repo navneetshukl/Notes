@@ -43,3 +43,16 @@ func (nu *NotesUsecaseImpl) CreateNote(note *notes.NoteReq) error {
 	}
 	return nil
 }
+
+// Get all note of user from DB
+
+func (nu *NotesUsecaseImpl) GetNotes(id string) ([]*notes.Note, error) {
+
+	allNotes, err := nu.notesRepo.GetNotes(id)
+	if err != nil {
+		nu.log.Error("failed to get notes from db", err)
+		return nil, db.ErrGettingNotes
+	}
+	return allNotes, nil
+
+}

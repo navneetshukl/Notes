@@ -15,5 +15,5 @@ type NoteReq struct {
 
 type NotesUsercase interface {
 	CreateNote(note NoteReq) (error)
-	GetNotes() ([]*Note, error)
+	GetNotes(id string) ([]*Note, error)
 }

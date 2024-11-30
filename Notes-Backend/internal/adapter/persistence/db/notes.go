@@ -24,13 +24,18 @@ func (nr *NotesRepo) CreateNote(note *notes.Note) error {
 	return nil
 
 }
-func (nr *NotesRepo) GetNotes() ([]*notes.Note, error) {
-
+func (nr *NotesRepo) GetNotes(id string) ([]*notes.Note, error) {
+	// Initialize the result slice
 	data := []*notes.Note{}
-	err := nr.db.Find(&data).Error
+
+	// Query the database filtering by userID
+	err := nr.db.Where("user_id = ?", id).Find(&data).Error
 	if err != nil {
-		nr.log.Error("Failed to get notes", err)
+		// Log error if something goes wrong
+		nr.log.Error("Failed to get notes by userID", err)
 		return nil, ErrGettingNotes
 	}
+
+	// Return the retrieved notes
 	return data, nil
 }
