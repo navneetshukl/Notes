@@ -1,8 +1,30 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import URL from "../config";
 
 const AddNote = () => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleSubmit = async () => {
+    console.log(title, description);
+
+    const response = await axios.post(
+      URL,
+      {
+        title: title,
+        description: description,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          id: id,
+        },
+      }
+    );
+  };
+
   return (
-    
     <form className="space-y-6 flex flex-col items-center">
       <div>
         <input
@@ -11,6 +33,7 @@ const AddNote = () => {
           className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[20rem] p-2.5"
           placeholder="Title"
           required
+          onChange={(e) => setTitle(e.target.value)}
         />
       </div>
 
@@ -20,6 +43,7 @@ const AddNote = () => {
           rows="10"
           className="block p-4 w-[20rem] text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 resize-none"
           placeholder="Content"
+          onChange={(e) => setDescription(e.target.value)}
         ></textarea>
       </div>
 
@@ -29,7 +53,6 @@ const AddNote = () => {
         </button>
       </div>
     </form>
-    
   );
 };
 
