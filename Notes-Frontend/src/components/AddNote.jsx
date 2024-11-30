@@ -9,19 +9,27 @@ const AddNote = () => {
   const handleSubmit = async () => {
     console.log(title, description);
 
-    const response = await axios.post(
-      URL,
-      {
-        title: title,
-        description: description,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          id: id,
+    try {
+      // Send POST request
+      const response = await axios.post(
+        URL,
+        {
+          title: title,
+          description: description,
         },
-      }
-    );
+        {
+          headers: {
+            "Content-Type": "application/json",
+            id: id,
+          },
+        }
+      );
+      console.log("Response:", response.data);
+      console.log("Post created successfully!");
+    } catch (error) {
+      console.error("Error during post request:", error);
+      console.log("Failed to create post. Please try again.");
+    }
   };
 
   return (
